@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description"
+	content="kaprekar constant demo in javascript">
+<meta name="keywords"
+	content="ncoder5, kaprekar constant, javascript">
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="website" />
+<meta property="og:title"
+	content="kaprekar constant demo" />
+<meta property="og:description"
+	content="ncoder5 kaprekar constant demo" />
+
+<title>Kaprekar Constant Demo</title>
+
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+</head>
+
+<body id="top">
+	
+	<!-- Main Body -->
+	<div class="container">		
+		<div class="row">
+			<div class="col">
+				<div class="card">
+					<div class="card-header bg-light">
+						<span class="font-lg">Kaprekar Constant</span>
+					</div>
+					<div class="card-body">
+						<span> Kaprekar constant, or 6174, is a
+							constant that arises when<br /> - we take a 4-digit integer, <br />-
+							form the largest and smallest numbers from its digits, <br />-
+							and then subtract these two numbers. <br />Continuing with this
+							process of forming and subtracting, we will always arrive at the
+							number 6174 or 0.
+						</span><br /> <br />
+						<form id="kcDemoForm">
+							<div class="form-group">
+								<label for="fourDigitNumber">Input</label> <input type="text"
+									class="form-control" id="fourDigitNumber"
+									aria-describedby="fourDigitNumberHelp"
+									placeholder="Example input, 7356" maxlength="4"> <small
+									id="fourDigitNumberHelp" class="form-text text-muted">Enter
+									any four digit number.</small>
+								<button type="button" class="btn btn-primary" onclick="init();">Start</button>
+								<button type="button" class="btn btn-secondary"
+									onclick="document.getElementById('kcDemoForm').reset();">Clear</button>
+							</div>
+							<div class="form-group">
+								<label for="outputTextarea1">Output</label>
+								<textarea class="form-control" id="outputTextarea1" rows="6"
+									readonly></textarea>
+							</div>
+						</form>						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br />
+	<br />
+	<br />
+
+	<!-- Kaprekar's constant function -->
+	<script>
+		const kc = 6174;
+		validate = function(num) {
+			if (!num) {
+				return false;
+			} else if (isNaN(num)) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+		getMin = function(num) {
+			var strNum = num.toString().padStart(4, '0');
+			var arrMin = strNum.split('').sort();
+			return parseInt(arrMin.join(''));
+		}
+		getMax = function(num) {
+			var strNum = num.toString().padStart(4, '0');
+			var arrMax = strNum.split('').sort().reverse();
+			return parseInt(arrMax.join(''));
+		}
+		getDiff = function(m, n) {
+			return m - n;
+		}
+		appendOutput = function(txtArea, txt) {
+			txtArea.value = txtArea.value + txt + "\n";
+		}
+		kaprekar = function(num, o) {
+			mx = getMax(num);
+			mn = getMin(num);
+			d = getDiff(mx, mn);
+			appendOutput(o, mx + " - " + mn + " = " + d);
+			if (d == 0) {
+				appendOutput(eleOut, "End <==");
+				appendOutput(o, "0 reached.");
+			} else if (d == kc) {
+				appendOutput(eleOut, "End <==");
+				appendOutput(o, "Kaprekar's Constant reached.");
+			} else {
+				kaprekar(d, o);
+			}
+		}
+
+		init = function() {
+			eleOut = document.getElementById("kcDemoForm").elements
+					.namedItem("outputTextarea1");
+			eleIn = document.getElementById("kcDemoForm").elements
+					.namedItem("fourDigitNumber");
+			numTxt = eleIn.value.trim();
+			eleOut.value = "";
+			appendOutput(eleOut, "Value entered: " + numTxt);
+			if (validate(numTxt)) {
+				appendOutput(eleOut, "Start ==>");
+				kaprekar(numTxt, eleOut);
+			} else {
+				appendOutput(eleOut, "Invalid input. Please try again.");
+			}
+		}
+	</script>
+</body>
+</html>
