@@ -99,15 +99,15 @@
 			txtArea.value = txtArea.value + txt + "\n";
 		}
 		kaprekar = function(num, o) {
-			mx = getMax(num);
-			mn = getMin(num);
-			d = getDiff(mx, mn);
+			var mx = getMax(num);
+			var mn = getMin(num);
+			var d = getDiff(mx, mn);
 			appendOutput(o, mx + " - " + mn + " = " + d);
 			if (d == 0) {
-				appendOutput(eleOut, "End <==");
+				appendOutput(o, "End <==");
 				appendOutput(o, "0 reached.");
 			} else if (d == kc) {
-				appendOutput(eleOut, "End <==");
+				appendOutput(o, "End <==");
 				appendOutput(o, "Kaprekar's Constant reached.");
 			} else {
 				kaprekar(d, o);
@@ -115,11 +115,11 @@
 		}
 
 		init = function() {
-			eleOut = document.getElementById("kcDemoForm").elements
+			var eleOut = document.getElementById("kcDemoForm").elements
 					.namedItem("outputTextarea1");
-			eleIn = document.getElementById("kcDemoForm").elements
+			var eleIn = document.getElementById("kcDemoForm").elements
 					.namedItem("fourDigitNumber");
-			numTxt = eleIn.value.trim();
+			var numTxt = eleIn.value.trim();
 			eleOut.value = "";
 			appendOutput(eleOut, "Value entered: " + numTxt);
 			if (validate(numTxt)) {
